@@ -21,7 +21,7 @@ from blog import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
-    # path("__reload__/", include("django_browser_reload.urls")),
+    path("__reload__/", include("django_browser_reload.urls")),
     path('accounts/', include('django.contrib.auth.urls')),
 
     # blog
