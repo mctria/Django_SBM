@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Django Blog</title>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(180deg, #5f7a3e, #8baa56);
+        display: flex;
+        flex-direction: column;
+      }
+      .digest-wrapper {
+        margin: 30px 20%;
+        background: #fafaf3;
+        border-radius: 20px;
+        padding: 25px 40px 40px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        flex: 1;
+      }
+      /* NAV */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 40px;
+        border-radius: 20px 20px 0 0;
+        background: #3c5220;
+        color: #fff;
+      }
+      .navbar .logo {
+        font-weight: 800;
+        font-size: 22px;
+        letter-spacing: 1px;
+      }
+      .navbar .nav-links a {
+        color: #fff;
+        margin-left: 20px;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .navbar .nav-links a:hover {
+        text-decoration: underline;
+      }
+      /* Footer stick */
+      footer {
+        text-align: center;
+        padding: 12px;
+        background: #3c5220;
+        color: #fff;
+        font-size: 14px;
+        border-radius: 0 0 20px 20px;
+        margin-top: 20px;
+      }
+      .form-card {
+        background: white;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      .form-card h3 {
+        color: #3c5220;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      form .form-group {
+        margin-bottom: 15px;
+      }
+      form label {
+        font-weight: 600;
+        font-size: 0.9rem;
+        display: block;
+        margin-bottom: 5px;
+        color: #444;
+      }
+      form input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        transition: border 0.2s;
+      }
+      form input:focus {
+        border: 1px solid #3c5220;
+        outline: none;
+      }
+      form button {
+        background: #3c5220;
+        color: white;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      form button:hover {
+        background: #2b3a14;
+      }
+    </style>
+    {% block extra_css %}{% endblock %}
+  </head>
+  <body>
+    <div class="digest-wrapper">
+      {% comment %} Navbar {% endcomment %}
+      <div class="navbar">
+        <div class="logo">Joke Blog</div>
+        <div class="nav-links">
+          <a href="{% url 'post_list' %}">Home</a>
+          {% if user.is_authenticated %}
+          <a href="{% url 'post_create' %}">Write</a>
+          <form
+            method="post"
+            action="{% url 'logout' %}"
+            style="display: inline"
+          >
+            {% csrf_token %}
+            <button
+              type="submit"
+              style="
+                background: none;
+                border: none;
+                color: white;
+                cursor: pointer;
+              "
+            >
+              Logout
+            </button>
+          </form>
+          {% else %}
+          <a href="{% url 'login' %}">Login</a>
+          <a href="{% url 'signup' %}">Signup</a>
+          {% endif %}
+        </div>
+      </div>
+
+      {% comment %} header {% endcomment %}
+      <div
+        class="digest-header"
+        style="text-align: center; margin: 20px 0 30px"
+      >
+        <h1 style="font-size: 2.2rem; color: #566c2e; margin: 0">
+          Weekly Digest
+        </h1>
+        <p style="color: #777; margin-top: 10px">
+          Curated blog posts & Random Jokes 🌱
+        </p>
+      </div>
+
+      {% block content %}{% endblock %}
+
+      <a
+        href="{% url 'post_random' %}"
+        style="
+          padding: 8px 14px;
+          background: #3d5220;
+          color: white;
+          border-radius: 6px;
+          text-decoration: none;
+        "
+      >
+        Random Jokes
+      </a>
+
+      <footer>
+        <p>&copy; 2025 Joke Blog. All rights reserved.</p>
+      </footer>
+    </div>
+  </body>
+</html>

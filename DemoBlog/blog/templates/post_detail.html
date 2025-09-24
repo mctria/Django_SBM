@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% block content %}
+<div
+  style="
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  "
+>
+  <h2>{{ object.title }}</h2>
+  <p style="color: #666">
+    By {{ object.author }} — {{ object.created_at|date:"F j, Y" }}
+  </p>
+  <p style="margin-top: 20px; line-height: 1.6">
+    {{ object.content|linebreaks }}
+  </p>
+
+  <div style="margin-top: 20px">
+    {% if user.is_authenticated and user == object.author %}
+    <a
+      href="{% url 'post_update' object.pk %}"
+      style="
+        padding: 8px 14px;
+        background: #b58900;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+      "
+      >Edit</a
+    >
+    <a
+      href="{% url 'post_delete' object.pk %}"
+      style="
+        padding: 8px 14px;
+        background: #d33;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+      "
+      >Delete</a
+    >
+    {% endif %}
+    <a
+      href="{% url 'post_list' %}"
+      style="
+        padding: 8px 14px;
+        background: #555;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        margin-left: 10px;
+      "
+      >← Back</a
+    >
+  </div>
+</div>
+{% endblock %}
